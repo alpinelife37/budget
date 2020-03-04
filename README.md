@@ -41,8 +41,8 @@ Node based app that starts connects to a Mongo database and allows the user trac
 ### NODE MODULES USED
 
 - [Compression](https://www.npmjs.com/package/compression)
-- [lite-server](https://www.npmjs.com/package/lite-server)
-- [mongoose](https://www.npmjs.com/package/mongoose)
+- [Lite-server](https://www.npmjs.com/package/lite-server)
+- [Mongoose](https://www.npmjs.com/package/mongoose)
 - [Express](https://www.npmjs.com/package/express)
 - [Morgan](https://www.npmjs.com/package/morgan)
 
