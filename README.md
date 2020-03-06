@@ -7,7 +7,7 @@
 Node based app that starts connects to a Mongo database and allows the user track expenses both online and off.
 
 ![Example profile](./public/assets/images/example.png)
-[Deployed Link]()
+[Deployed Link](https://immense-river-17093.herokuapp.com/)
 
 ### INSTALLATION INSTRUCTIONS
 
@@ -21,7 +21,7 @@ Node based app that starts connects to a Mongo database and allows the user trac
 
    - [Deployed Setup]
 
-6. [Click on the following Heroku link to see the deployed version.]()
+6. [Click on the following Heroku link to see the deployed version.](https://immense-river-17093.herokuapp.com/)
 
 ### BUILT WITH
 
