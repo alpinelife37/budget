@@ -3,6 +3,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const compression = require("compression");
 
+const MONGODB_URI = process.env.MONGODB_URI;
 const PORT = 3000;
 
 const app = express();
