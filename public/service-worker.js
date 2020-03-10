@@ -25,7 +25,7 @@ self.addEventListener("install", function(evt) {
 
 //activate
 self.addEventListener("activate", evt => {
-  const currentCaches = [STATIC_CACHE, RUNTIME_CACHE];
+  const currentCaches = [CACHE_NAME, RUNTIME_CACHE];
   evt.waitUntil(
     caches
       .keys()
