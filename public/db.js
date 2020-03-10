@@ -1,24 +1,19 @@
-const indexedDB =
-  window.indexedDB ||
-  window.mozIndexedDB ||
-  window.webkitIndexedDB ||
-  window.msIndexedDB ||
-  window.shimIndexedDB;
 let db;
 const request = indexedDB.open("budget", 1);
-request.onupgradeneeded = ({ target }) => {
-  let db = target.result;
+request.onupgradeneeded = function(evt) {
+  const db = evt.target.result;
   db.createObjectStore("pending", { autoIncrement: true });
 };
-request.onsuccess = ({ target }) => {
-  db = target.result;
+request.onsuccess = function(evt) {
+  db = evt.target.result;
   if (navigator.onLine) {
     checkDatabase();
   }
 };
-request.onerror = function(event) {
-  console.log(event.target.errorCode);
+request.onerror = function(evt) {
+  console.log(evt.target.errorCode);
 };
+
 function saveRecord(record) {
   const transaction = db.transaction(["pending"], "readwrite");
   const store = transaction.objectStore("pending");
@@ -38,9 +33,7 @@ function checkDatabase() {
           "Content-Type": "application/json"
         }
       })
-        .then(response => {
-          return response.json();
-        })
+        .then(response => response.json())
         .then(() => {
           const transaction = db.transaction(["pending"], "readwrite");
           const store = transaction.objectStore("pending");
