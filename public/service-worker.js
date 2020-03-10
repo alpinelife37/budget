@@ -45,58 +45,35 @@ self.addEventListener("activate", evt => {
   );
 });
 
-// fetch
-// self.addEventListener("fetch", function(evt) {
-//   evt.respondWith(
-//     fetch(evt.request).catch(function() {
-//       return caches.match(evt.request).then(function(response) {
-//         if (response) {
-//           return response;
-//         } else if (evt.request.headers.get("accept").includes("text/html")) {
-//           return caches.match("/index.html");
-//         }
-//       });
-//     })
-//   );
-// });
-
-self.addEventListener("fetch", event => {
-  // non GET requests are not cached and requests to other origins are not cached
+self.addEventListener("fetch", evt => {
   if (
-    event.request.method !== "GET" ||
-    !event.request.url.startsWith(self.location.origin)
+    evt.request.method !== "GET" ||
+    !evt.request.url.startsWith(self.location.origin)
   ) {
-    event.respondWith(fetch(event.request));
+    evt.respondWith(fetch(evt.request));
     return;
   }
-
-  // handle runtime GET requests for data from /api routes
-  if (event.request.url.includes("/api/transaction")) {
-    // make network request and fallback to cache if network request fails (offline)
-    event.respondWith(
+  if (evt.request.url.includes("/api/transaction")) {
+    evt.respondWith(
       caches.open(RUNTIME_CACHE).then(cache => {
-        return fetch(event.request)
+        return fetch(evt.request)
           .then(response => {
-            cache.put(event.request, response.clone());
+            cache.put(evt.request, response.clone());
             return response;
           })
-          .catch(() => caches.match(event.request));
+          .catch(() => caches.match(evt.request));
       })
     );
     return;
   }
-
-  // use cache first for all other requests for performance
-  event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
+  evt.respondWith(
+    caches.match(evt.request).then(cachedResponse => {
       if (cachedResponse) {
         return cachedResponse;
       }
-
-      // request is not in cache. make network request and cache the response
       return caches.open(RUNTIME_CACHE).then(cache => {
-        return fetch(event.request).then(response => {
-          return cache.put(event.request, response.clone()).then(() => {
+        return fetch(evt.request).then(response => {
+          return cache.put(evt.request, response.clone()).then(() => {
             return response;
           });
         });
